@@ -49,7 +49,7 @@ function startNewGame(customAnswer = "") {
 
 async function loadAllowedGuesses() {
   try {
-    const response = await fetch(DICTIONARY_URL, { cache: "force-cache" });
+    const response = await fetch(DICTIONARY_URL, { cache: "no-cache" });
     if (!response.ok) {
       throw new Error(`Dictionary request failed with ${response.status}`);
     }
