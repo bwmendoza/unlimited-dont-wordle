@@ -166,14 +166,14 @@ function syncCurrentGuessUI() {
   syncRandomWordButtonUI();
 }
 
-function applySettingsFromForm() {
+function readSettingsFromForm() {
   const nextMode = document.querySelector("#mode-select")?.value ?? settings.mode;
   const survivalTargetValue = document.querySelector("#survival-target-input")?.value ?? "";
   const maxUndosValue = document.querySelector("#max-undos-input")?.value ?? "";
   const survivalTarget = survivalTargetValue === "" ? 6 : Number(survivalTargetValue) || 6;
   const maxUndos = maxUndosValue === "" ? 5 : Number(maxUndosValue) || 5;
 
-  settings = {
+  return {
     ...settings,
     mode: nextMode,
     survivalTarget: Math.max(1, Math.min(99, survivalTarget)),
@@ -186,6 +186,10 @@ function applySettingsFromForm() {
     countTrappedAsWin:
       document.querySelector("#count-trapped-setting")?.checked ?? settings.countTrappedAsWin
   };
+}
+
+function applySettingsFromForm() {
+  settings = readSettingsFromForm();
 
   showRemainingWords = settings.showRemainingWords;
   saveSettings(settings);
@@ -426,6 +430,9 @@ function bindEvents() {
       render();
       return;
     }
+    settings = readSettingsFromForm();
+    showRemainingWords = settings.showRemainingWords;
+    saveSettings(settings);
     settingsOpen = false;
     gameState = startNewGame(answer);
     render();
