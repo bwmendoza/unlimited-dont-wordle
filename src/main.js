@@ -94,6 +94,14 @@ function getVisibleRemainingWords() {
   return gameState.remainingWords.filter((word) => word.startsWith(gameState.currentInput));
 }
 
+function getRandomizableWords() {
+  if (!gameState) {
+    return [];
+  }
+
+  return gameState.remainingWords;
+}
+
 function completeGameIfNeeded() {
   if (!gameState.concluded) {
     if (pendingCompletedStatsSnapshot) {
@@ -138,7 +146,7 @@ function syncRandomWordButtonUI() {
     return;
   }
 
-  randomWordButton.disabled = getVisibleRemainingWords().length === 0;
+  randomWordButton.disabled = getRandomizableWords().length === 0;
 }
 
 function syncCurrentGuessUI() {
@@ -208,6 +216,7 @@ function render() {
 
   const keyboardStatuses = getKeyboardStatuses(gameState.guesses);
   const visibleRemainingWords = getVisibleRemainingWords();
+  const randomizableWords = getRandomizableWords();
 
   app.innerHTML = `
     <div class="shell">
@@ -272,7 +281,7 @@ function render() {
                   ${
                     settings.showRandomWordButton
                       ? `<button id="random-word-button" type="button" class="secondary" ${
-                          visibleRemainingWords.length === 0 ? "disabled" : ""
+                          randomizableWords.length === 0 ? "disabled" : ""
                         }>Random word</button>`
                       : ""
                   }
@@ -372,15 +381,15 @@ function bindEvents() {
   });
 
   document.querySelector("#random-word-button")?.addEventListener("click", () => {
-    const visibleRemainingWords = getVisibleRemainingWords();
-    if (visibleRemainingWords.length === 0) {
-      gameState = { ...gameState, message: "No matching words are available for random fill." };
+    const randomizableWords = getRandomizableWords();
+    if (randomizableWords.length === 0) {
+      gameState = { ...gameState, message: "No remaining words are available for random fill." };
       render();
       return;
     }
 
     const randomWord =
-      visibleRemainingWords[Math.floor(Math.random() * visibleRemainingWords.length)];
+      randomizableWords[Math.floor(Math.random() * randomizableWords.length)];
 
     gameState = {
       ...gameState,
