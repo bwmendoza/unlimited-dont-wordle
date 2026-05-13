@@ -56,14 +56,14 @@ global.window = {
   localStorage: createStorageMock()
 };
 
-test("word lists use the larger Wordle-sized dictionary", () => {
+test("word lists use the Wordle-sized dictionary", () => {
   const dictionaryWords = fs
     .readFileSync(new URL("../dictionary-5-letter.txt", import.meta.url), "utf8")
     .trim()
     .split(/\r?\n/);
 
   assert.equal(answerWords.length, 2315);
-  assert.equal(dictionaryWords.length, 15921);
+  assert.equal(dictionaryWords.length, 12972);
   assert.equal(DEFAULT_BOARD_ROWS, 6);
 });
 
