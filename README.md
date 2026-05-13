@@ -23,7 +23,15 @@ Every guess must stay consistent with every clue you have already revealed. Hard
 - Responsive mobile-friendly layout
 - Two game modes: Classic and Exhaustion
 
-## Run Locally
+## Play Online
+
+The live site is available here:
+
+[https://bwmendoza.github.io/unlimited-dont-wordle/](https://bwmendoza.github.io/unlimited-dont-wordle/)
+
+Open that link in your browser and the game should load directly.
+
+## Local Development
 
 This project has no external dependencies and does not rely on `npm`.
 
