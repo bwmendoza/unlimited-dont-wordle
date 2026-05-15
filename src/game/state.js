@@ -46,7 +46,7 @@ function cloneGuess(guess) {
 function snapshotGame(gameState) {
   return {
     guesses: gameState.guesses.map(cloneGuess),
-    currentInput: gameState.currentInput,
+    currentInput: "",
     status: gameState.status,
     message: gameState.message,
     remainingWords: [...gameState.remainingWords],
@@ -184,6 +184,17 @@ export function applyGuess(gameState, guess) {
 }
 
 export function undoGuess(gameState) {
+  if (gameState.currentInput) {
+    return {
+      error: "",
+      gameState: {
+        ...gameState,
+        currentInput: "",
+        message: "Cleared the current guess."
+      }
+    };
+  }
+
   if (gameState.undoStack.length === 0) {
     return { gameState: { ...gameState, message: "There is nothing to undo." }, error: "empty" };
   }

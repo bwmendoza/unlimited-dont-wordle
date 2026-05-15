@@ -186,8 +186,28 @@ test("undo restores the previous guess state and remaining count", () => {
 
   const undone = undoGuess(gameState).gameState;
   assert.equal(undone.guesses.length, 0);
+  assert.equal(undone.currentInput, "");
   assert.equal(undone.remainingWords.length, sampleAllowedGuesses.length);
   assert.equal(undone.undosRemaining, 4);
+});
+
+test("undo clears an in-progress guess without spending an undo", () => {
+  const gameState = createInitialGameState({
+    answer: "apple",
+    mode: "classic",
+    survivalTarget: 10,
+    allowedGuesses: sampleAllowedGuesses
+  });
+
+  const cleared = undoGuess({
+    ...gameState,
+    currentInput: "al"
+  }).gameState;
+
+  assert.equal(cleared.currentInput, "");
+  assert.equal(cleared.undosRemaining, 5);
+  assert.equal(cleared.undoStack.length, 0);
+  assert.equal(cleared.message, "Cleared the current guess.");
 });
 
 test("stats can be restored exactly after an undo reopens a finished game", () => {

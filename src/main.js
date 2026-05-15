@@ -237,6 +237,17 @@ function render() {
 
       <main class="layout">
         <section class="game-panel">
+          <div class="mobile-summary-strip">
+            <div class="mobile-metric">
+              <span>Valid words remaining</span>
+              <strong>${gameState.remainingWords.length}</strong>
+            </div>
+            <div class="mobile-metric">
+              <span>Undos remaining</span>
+              <strong>${gameState.undosRemaining}</strong>
+            </div>
+          </div>
+
           <div class="status-strip">
             <div class="status-card">
               <span>Mode</span>
@@ -290,7 +301,8 @@ function render() {
                       : ""
                   }
                   <button id="undo-button" type="button" class="secondary" ${
-                    gameState.undoStack.length === 0 || gameState.undosRemaining <= 0
+                    (!gameState.currentInput &&
+                      (gameState.undoStack.length === 0 || gameState.undosRemaining <= 0))
                       ? "disabled"
                       : ""
                   }>Undo</button>
@@ -310,6 +322,55 @@ function render() {
 
           <div data-remaining-words-mount>
             ${renderRemainingWords(gameState.remainingWords, showRemainingWords, gameState.currentInput)}
+          </div>
+
+          <div class="mobile-accordion-stack">
+            <details class="mobile-details-card">
+              <summary>Game details</summary>
+              <div class="mobile-details-body mobile-status-grid">
+                <div class="status-card">
+                  <span>Mode</span>
+                  <strong>${getModeLabel(gameState.mode)}</strong>
+                </div>
+                <div class="status-card">
+                  <span>Target guesses</span>
+                  <strong>${getTargetStatus(gameState)}</strong>
+                </div>
+                ${
+                  settings.debugMode
+                    ? `<div class="status-card">
+                        <span>Debug answer</span>
+                        <strong>${gameState.answer.toUpperCase()}</strong>
+                      </div>`
+                    : ""
+                }
+              </div>
+            </details>
+
+            <details class="mobile-details-card">
+              <summary>Stats</summary>
+              <div class="mobile-details-body">
+                <div class="stats-grid">
+                  <div><span>Games played</span><strong>${stats.gamesPlayed}</strong></div>
+                  <div><span>Wins survived</span><strong>${stats.gamesWon}</strong></div>
+                  <div><span>Losses</span><strong>${stats.gamesLost}</strong></div>
+                  <div><span>Average guesses</span><strong>${stats.averageGuesses}</strong></div>
+                  <div><span>Best streak</span><strong>${stats.longestSurvivalStreak}</strong></div>
+                  <div><span>Current streak</span><strong>${stats.currentSurvivalStreak}</strong></div>
+                </div>
+              </div>
+            </details>
+
+            <details class="mobile-details-card">
+              <summary>How to survive</summary>
+              <div class="mobile-details-body mobile-rules-copy">
+                <p>Every guess must match every clue you have already revealed.</p>
+                <p>Classic mode: win as soon as you survive the target number of valid non-answer guesses.</p>
+                <p>Exhaustion mode: win by narrowing the puzzle until no safe non-answer guesses remain, usually when only the real answer is left.</p>
+                <p>Green means keep that letter locked in place. Yellow means use it elsewhere. Gray means avoid it unless duplicate logic proved extra copies exist.</p>
+                <p>You lose instantly if your guess matches the secret answer.</p>
+              </div>
+            </details>
           </div>
         </section>
 
