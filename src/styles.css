@@ -14,6 +14,7 @@
   --accent: #38bdf8;
   --danger: #ef4444;
   --shadow: 0 24px 60px rgba(15, 23, 42, 0.3);
+  --mobile-fit-scale: 1;
   font-family: "Avenir Next", "Segoe UI", sans-serif;
 }
 
@@ -125,6 +126,23 @@ button.danger {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+}
+
+.topbar-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.button-icon {
+  display: none;
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.button-label {
+  display: inline;
 }
 
 .eyebrow {
@@ -634,60 +652,60 @@ h1 {
 
 @media (max-width: 640px) {
   .shell {
-    padding: 0.7rem;
+    padding: calc(0.7rem * var(--mobile-fit-scale));
   }
 
   .topbar {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.55rem;
-    margin-bottom: 0.7rem;
+    gap: calc(0.55rem * var(--mobile-fit-scale));
+    margin-bottom: calc(0.7rem * var(--mobile-fit-scale));
   }
 
   .topbar-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.55rem;
+    gap: calc(0.55rem * var(--mobile-fit-scale));
   }
 
   .mobile-summary-strip {
-    gap: 0.6rem;
+    gap: calc(0.6rem * var(--mobile-fit-scale));
   }
 
   .eyebrow {
-    font-size: 0.62rem;
+    font-size: calc(0.62rem * var(--mobile-fit-scale));
     letter-spacing: 0.12em;
   }
 
   h1 {
-    font-size: clamp(1.35rem, 7vw, 1.9rem);
+    font-size: calc(1.7rem * var(--mobile-fit-scale));
     line-height: 1;
   }
 
   .topbar-actions button {
-    padding: 0.65rem 0.8rem;
+    padding: calc(0.65rem * var(--mobile-fit-scale)) calc(0.8rem * var(--mobile-fit-scale));
     border-radius: 12px;
-    font-size: 0.95rem;
+    font-size: calc(0.95rem * var(--mobile-fit-scale));
   }
 
   .board {
-    margin-top: 0.5rem;
+    margin-top: calc(0.5rem * var(--mobile-fit-scale));
   }
 
   .board-header {
-    gap: 0.3rem 0.7rem;
-    font-size: 0.86rem;
+    gap: calc(0.3rem * var(--mobile-fit-scale)) calc(0.7rem * var(--mobile-fit-scale));
+    font-size: calc(0.86rem * var(--mobile-fit-scale));
   }
 
   .board-row {
-    gap: 0.3rem;
+    gap: calc(0.3rem * var(--mobile-fit-scale));
   }
 
   .tile {
-    width: clamp(2.45rem, 14vw, 2.95rem);
-    height: clamp(2.45rem, 14vw, 2.95rem);
+    width: calc(2.65rem * var(--mobile-fit-scale));
+    height: calc(2.65rem * var(--mobile-fit-scale));
     border-radius: 4px;
-    font-size: clamp(1.05rem, 5vw, 1.4rem);
+    font-size: calc(1.22rem * var(--mobile-fit-scale));
   }
 
   .board-card,
@@ -697,35 +715,35 @@ h1 {
   .rules-card,
   .message-box,
   .status-card {
-    padding: 0.72rem;
+    padding: calc(0.72rem * var(--mobile-fit-scale));
   }
 
   .guess-form {
     grid-template-columns: 1fr;
-    gap: 0.5rem;
+    gap: calc(0.5rem * var(--mobile-fit-scale));
   }
 
   .guess-form button {
-    padding: 0.68rem 0.8rem;
-    font-size: 0.94rem;
+    padding: calc(0.68rem * var(--mobile-fit-scale)) calc(0.8rem * var(--mobile-fit-scale));
+    font-size: calc(0.94rem * var(--mobile-fit-scale));
   }
 
   .keyboard-card {
-    padding: 0.6rem;
-    gap: 0.4rem;
+    padding: calc(0.6rem * var(--mobile-fit-scale));
+    gap: calc(0.4rem * var(--mobile-fit-scale));
   }
 
   .keyboard-row {
     justify-content: stretch;
     flex-wrap: nowrap;
-    gap: 0.32rem;
+    gap: calc(0.32rem * var(--mobile-fit-scale));
   }
 
   .key {
     flex: 1 1 0;
     min-width: 0;
-    font-size: 0.86rem;
-    padding: 0.62rem 0.16rem;
+    font-size: calc(0.86rem * var(--mobile-fit-scale));
+    padding: calc(0.62rem * var(--mobile-fit-scale)) calc(0.16rem * var(--mobile-fit-scale));
     border-radius: 9px;
   }
 
@@ -739,11 +757,11 @@ h1 {
   }
 
   .mobile-metric span {
-    font-size: 0.72rem;
+    font-size: calc(0.72rem * var(--mobile-fit-scale));
   }
 
   .mobile-metric strong {
-    font-size: 1.45rem;
+    font-size: calc(1.45rem * var(--mobile-fit-scale));
   }
 
   .mobile-status-grid {
@@ -752,13 +770,13 @@ h1 {
 
   .message-box p,
   .subtle {
-    font-size: 0.94rem;
+    font-size: calc(0.94rem * var(--mobile-fit-scale));
     line-height: 1.35;
   }
 
   .word-chip {
-    font-size: 0.76rem;
-    padding: 0.32rem 0.55rem;
+    font-size: calc(0.76rem * var(--mobile-fit-scale));
+    padding: calc(0.32rem * var(--mobile-fit-scale)) calc(0.55rem * var(--mobile-fit-scale));
   }
 
   .modal {
@@ -771,7 +789,8 @@ h1 {
 
 @media (max-width: 420px) {
   .topbar-actions {
-    grid-template-columns: 1fr;
+    grid-template-columns: auto auto;
+    justify-content: end;
   }
 
   .eyebrow {
@@ -779,43 +798,56 @@ h1 {
   }
 
   h1 {
-    font-size: clamp(1.2rem, 6.5vw, 1.55rem);
+    font-size: calc(1.42rem * var(--mobile-fit-scale));
   }
 
   .tile {
-    width: clamp(2.15rem, 13vw, 2.55rem);
-    height: clamp(2.15rem, 13vw, 2.55rem);
-    font-size: clamp(0.98rem, 5.5vw, 1.2rem);
+    width: calc(2.35rem * var(--mobile-fit-scale));
+    height: calc(2.35rem * var(--mobile-fit-scale));
+    font-size: calc(1.08rem * var(--mobile-fit-scale));
   }
 
   .board-card,
   .keyboard-card,
   .remaining-panel,
   .message-box {
-    padding: 0.62rem;
+    padding: calc(0.62rem * var(--mobile-fit-scale));
   }
 
   .board-header {
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--mobile-fit-scale));
   }
 
   .topbar-actions button,
   .guess-form button {
-    padding: 0.62rem 0.72rem;
-    font-size: 0.9rem;
+    padding: calc(0.62rem * var(--mobile-fit-scale)) calc(0.72rem * var(--mobile-fit-scale));
+    font-size: calc(0.9rem * var(--mobile-fit-scale));
+  }
+
+  .topbar-actions button {
+    min-width: 2.45rem;
+    gap: 0;
+  }
+
+  .button-icon {
+    display: inline;
+  }
+
+  .button-label {
+    display: none;
   }
 
   .mobile-summary-strip {
-    gap: 0.45rem;
+    gap: calc(0.45rem * var(--mobile-fit-scale));
   }
 
   .mobile-metric strong {
-    font-size: 1.3rem;
+    font-size: calc(1.3rem * var(--mobile-fit-scale));
   }
 
   .key {
-    font-size: 0.8rem;
-    padding: 0.56rem 0.12rem;
+    font-size: calc(0.8rem * var(--mobile-fit-scale));
+    padding: calc(0.56rem * var(--mobile-fit-scale)) calc(0.12rem * var(--mobile-fit-scale));
   }
 
   .status-card strong,

@@ -30,6 +30,7 @@ let settingsOpen = false;
 let lastCompletedStatus = null;
 let pendingCompletedStatsSnapshot = null;
 let loadedAllowedGuesses = answerWords;
+let mobileFitFrame = 0;
 
 let gameState = null;
 
@@ -203,6 +204,32 @@ function closeSettingsWithoutSaving() {
   render();
 }
 
+function applyMobileViewportFit() {
+  cancelAnimationFrame(mobileFitFrame);
+
+  mobileFitFrame = requestAnimationFrame(() => {
+    document.documentElement.style.setProperty("--mobile-fit-scale", "1");
+
+    if (window.innerWidth > 640) {
+      return;
+    }
+
+    const shell = document.querySelector(".shell");
+    const keyboardCard = document.querySelector(".keyboard-card");
+    if (!shell || !keyboardCard) {
+      return;
+    }
+
+    const shellTop = shell.getBoundingClientRect().top;
+    const keyboardBottom = keyboardCard.getBoundingClientRect().bottom;
+    const neededHeight = keyboardBottom - shellTop + 8;
+    const availableHeight = window.innerHeight - 8;
+    const scale = Math.max(0.68, Math.min(1, availableHeight / neededHeight));
+
+    document.documentElement.style.setProperty("--mobile-fit-scale", scale.toFixed(3));
+  });
+}
+
 function render() {
   if (!gameState) {
     app.innerHTML = `
@@ -230,8 +257,14 @@ function render() {
           <h1>Unlimited Don’t Wordle</h1>
         </div>
         <div class="topbar-actions">
-          <button id="new-game-button" type="button">New random game</button>
-          <button id="settings-button" type="button" class="secondary">Settings</button>
+          <button id="new-game-button" type="button" aria-label="New random game">
+            <span class="button-icon" aria-hidden="true">↻</span>
+            <span class="button-label">New random game</span>
+          </button>
+          <button id="settings-button" type="button" class="secondary" aria-label="Settings">
+            <span class="button-icon" aria-hidden="true">⚙</span>
+            <span class="button-label">Settings</span>
+          </button>
         </div>
       </header>
 
@@ -402,6 +435,7 @@ function render() {
   `;
 
   bindEvents();
+  applyMobileViewportFit();
 }
 
 function bindEvents() {
@@ -608,5 +642,8 @@ async function initialize() {
   gameState = startNewGame();
   render();
 }
+
+window.addEventListener("resize", applyMobileViewportFit);
+window.addEventListener("orientationchange", applyMobileViewportFit);
 
 initialize();
