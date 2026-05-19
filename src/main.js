@@ -253,7 +253,6 @@ function render() {
     <div class="shell">
       <header class="topbar">
         <div>
-          <p class="eyebrow">Inverted Wordle</p>
           <h1>Unlimited Don’t Wordle</h1>
         </div>
         <div class="topbar-actions">

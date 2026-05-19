@@ -137,13 +137,13 @@ button.danger {
 }
 
 .button-icon {
-  display: none;
+  display: inline;
   font-size: 1.1em;
   line-height: 1;
 }
 
 .button-label {
-  display: inline;
+  display: none;
 }
 
 .eyebrow {
@@ -830,14 +830,6 @@ h1 {
   .topbar-actions button {
     min-width: 2.45rem;
     gap: 0;
-  }
-
-  .button-icon {
-    display: inline;
-  }
-
-  .button-label {
-    display: none;
   }
 
   .mobile-summary-strip {
